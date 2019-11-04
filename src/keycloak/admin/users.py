@@ -15,7 +15,8 @@ USER_KWARGS = [
     'client_roles',
     'groups',
     'enabled',
-    'credentials'
+    'credentials',
+    'required_actions'
 ]
 
 
