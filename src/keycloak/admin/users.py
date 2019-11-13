@@ -79,7 +79,8 @@ class User(KeycloakAdminBase):
     _BASE = "/auth/admin/realms/{realm}/users/{user_id}"
     _paths = {
         'single': _BASE,
-        'reset_password': _BASE + "/reset-password"
+        'reset_password': _BASE + "/reset-password",
+        'execute_actions_email': _BASE + "/execute-actions-email"
     }
 
     def __init__(self, realm_name, user_id, *args, **kwargs):
@@ -179,6 +180,19 @@ class User(KeycloakAdminBase):
             url=self._client.get_full_url(
                 self.get_path(
                     'reset_password', realm=self._realm_name,
+                    user_id=self._user_id
+                )
+            ),
+            data=json.dumps(payload, sort_keys=True)
+        )
+        return result
+
+    def execute_actions_email(self, list_actions: list):
+        payload = list_actions
+        result = self._client.put(
+            url=self._client.get_full_url(
+                self.get_path(
+                    'execute_actions_email', realm=self._realm_name,
                     user_id=self._user_id
                 )
             ),
